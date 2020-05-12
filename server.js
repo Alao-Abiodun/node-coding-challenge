@@ -1,14 +1,20 @@
 const express = require('express');
 const app = express();
 const PORT = 1000;
+const chatbot = require('./Routes/routes');
 
-app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.json({ extended: true}));
 
-app.get('/', (req, res) => {
-    res.json("Chat bot is initialized");
-})
+
+app.use(chatbot);
 
 app.listen(PORT, () => {
     console.log(`Server is running on Port ${PORT}`);
 })
+
+//Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+    console.log(`Error: ${err}`);
+    server.close(() => process.exit(1));
+  });
+  
